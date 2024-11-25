@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "../styles/globals.css"; // Importa el archivo CSS global
 
 export const metadata: Metadata = {
   title: "Balance de Carga",
@@ -12,15 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <div>
-        <header>
-          <h1>Mi Aplicación</h1>
-          {/* Aquí puedes agregar un menú de navegación */}
-        </header>
+      <div className="flex ">
         <body>{children}</body>
-        <footer>
-          <p>© 2024 Mi Aplicación</p>
-        </footer>
       </div>
     </html>
   );
