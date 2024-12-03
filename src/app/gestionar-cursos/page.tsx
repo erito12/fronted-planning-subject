@@ -41,15 +41,7 @@ const GestionarCursos: React.FC = () => {
     }
   };
 
-  const handleUpdate = async (cursoId: number, cursoData: { name_course: string }) => {
-    try {
-      await updateCourse(cursoId, cursoData);
-      setUpdateTrigger((prev) => prev + 1); // Actualiza la lista de cursos
-    } catch (error) {
-      console.error("Error actualizando curso:", error);
-    }
-    setIsModalOpen(false); // Cierra el modal después de la actualización
-  };
+  const handleUpdate = async (cursoId: number) => {};
 
   const handleDelete = async (cursoId: number) => {
     try {

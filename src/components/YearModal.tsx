@@ -34,7 +34,6 @@ const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
               className="block text-sm font-medium text-gray-700"
             >
               Nombre del Año{" "}
-              <h2 className="text-lg font-semibold mb-4">Crear Nuevo Año</h2>
             </label>
             <input
               type="text"
@@ -51,7 +50,7 @@ const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
-              Crear Curso
+              Crear Año
             </button>
             <button
               type="button"

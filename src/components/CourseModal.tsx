@@ -67,7 +67,7 @@ const ModalCrearCurso: React.FC<ModalCrearCursoProps> = ({
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
-              {cursoId ? "Actualizar Curso" : "Crear Curso"}
+              {cursoId ? ` Actualizar ${title}` : `Crear ${title}`}
             </button>
             <button
               type="button"

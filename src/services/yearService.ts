@@ -22,3 +22,8 @@ export const createYear = async (yearData: {
     throw new Error("No se pudo crear el año."); // Lanza un error para manejarlo en el componente
   }
 };
+export const fetchYear = async (): Promise<yearInterface[]> => {
+  const response = await axios.get(API_URL);
+  console.log(response);
+  return response.data;
+};
