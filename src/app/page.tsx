@@ -5,7 +5,10 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h1 className="text-4xl font-bold mb-4">
-        Bienvenido a la Gestión de Cursos
+        Bienvenido a la Gestión de Balance de Carga
+      </h1>
+      <h1 className="text-4xl font-bold mb-4">
+        Departamento de Ciberseguridad
       </h1>
       <p className="mb-8">Administra tus cursos de manera eficiente.</p>
       <Link href="/gestionar-cursos">

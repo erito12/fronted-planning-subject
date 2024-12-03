@@ -1,23 +1,40 @@
-// components/ModalCrearCurso.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-interface ModalCreateYearProps {
+interface ModalCrearCursoProps {
+  title: string;
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (year: { name_year: string }) => void;
+  onCreate: (curso: { name_course: string }) => void;
+  onUpdate?: (cursoId: number, curso: { name_course: string }) => void; // Nueva función opcional para actualizar
+  initialName?: string; // Propiedad opcional para el nombre inicial
+  cursoId?: number; // ID del curso a actualizar
 }
 
-const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
+const ModalCrearCurso: React.FC<ModalCrearCursoProps> = ({
   isOpen,
   onClose,
   onCreate,
+  onUpdate,
+  title,
+  initialName = "",
+  cursoId,
 }) => {
-  const [nameYear, setNameYear] = useState("");
+  const [nameCourse, setNameCourse] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      setNameCourse(initialName); // Actualiza el estado cuando el modal se abre
+    }
+  }, [isOpen, initialName]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onCreate({ name_year: nameYear });
-    setNameYear("");
+    if (onUpdate && cursoId) {
+      onUpdate(cursoId, { name_course: nameCourse }); // Llama a la función de actualización
+    } else {
+      onCreate({ name_course: nameCourse });
+    }
+    setNameCourse("");
     onClose();
   };
 
@@ -26,21 +43,20 @@ const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-lg font-semibold mb-4">Crear Nuevo Año</h2>
+        <h2 className="text-lg font-semibold mb-4">{title}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="nameCourse"
               className="block text-sm font-medium text-gray-700"
             >
-              Nombre del Año{" "}
-              <h2 className="text-lg font-semibold mb-4">Crear Nuevo Año</h2>
+              Nombre del {title}:
             </label>
             <input
               type="text"
               id="nameCourse"
-              value={nameYear}
-              onChange={(e) => setNameYear(e.target.value)}
+              value={nameCourse}
+              onChange={(e) => setNameCourse(e.target.value)}
               required
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-blue-500"
             />
@@ -51,7 +67,7 @@ const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
-              Crear Curso
+              {cursoId ? "Actualizar Curso" : "Crear Curso"}
             </button>
             <button
               type="button"
@@ -67,4 +83,4 @@ const ModalCreateYear: React.FC<ModalCreateYearProps> = ({
   );
 };
 
-export default ModalCreateYear;
+export default ModalCrearCurso;

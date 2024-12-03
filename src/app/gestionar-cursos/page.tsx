@@ -5,11 +5,13 @@ import {
   createCourse,
   deleteCourse,
   fetchCursos,
+  updateCourse,
 } from "@/services/curseService";
 
 import CursoCard from "@/components/CourseCard";
-import ModalCrearCurso from "@/components/CustomModal";
+
 import IsEmpty from "@/components/EmptyCard";
+import ModalCrearCurso from "@/components/CourseModal";
 
 const GestionarCursos: React.FC = () => {
   const [cursos, setCursos] = useState<CourseInterface[]>([]);
@@ -31,7 +33,6 @@ const GestionarCursos: React.FC = () => {
 
   const handleCreate = async (curso: { name_course: string }) => {
     try {
-      // Llama a la función createCourse y espera la respuesta
       const nuevoCurso = await createCourse(curso);
 
       setCursos((prev) => [...prev, nuevoCurso]);
@@ -40,17 +41,21 @@ const GestionarCursos: React.FC = () => {
     }
   };
 
-  const handleUpdate = (cursoId: number) => {
-    console.log("Actualizar curso con ID:", cursoId);
-
-    setUpdateTrigger((prev) => prev + 1);
+  const handleUpdate = async (cursoId: number, cursoData: { name_course: string }) => {
+    try {
+      await updateCourse(cursoId, cursoData);
+      setUpdateTrigger((prev) => prev + 1); // Actualiza la lista de cursos
+    } catch (error) {
+      console.error("Error actualizando curso:", error);
+    }
+    setIsModalOpen(false); // Cierra el modal después de la actualización
   };
 
   const handleDelete = async (cursoId: number) => {
     try {
-      await deleteCourse(cursoId); // Llama a tu función de eliminación
+      await deleteCourse(cursoId);
       console.log("Curso eliminado con éxito");
-      // Actualiza el estado local si es necesario
+
       setUpdateTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Error al eliminar el curso:", error);
@@ -61,9 +66,11 @@ const GestionarCursos: React.FC = () => {
     <div className="pl-6">
       <h1 className="text-2xl font-semibold mb-2">Gestión de Cursos</h1>
       <ModalCrearCurso
+        title="Curso"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onCreate={handleCreate}
+        onUpdate={handleUpdate}
       />
       <div className=" flex items-center  ">
         <IsEmpty openModal={() => setIsModalOpen(true)} name="curso" />
